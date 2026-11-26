@@ -40,3 +40,12 @@ def test_usuario_inativo_nao_autentica():
     usuario.save()
 
     assert authenticate(username="bia@exemplo.com", password="senha-de-teste-123") is None
+
+
+def test_email_e_guardado_em_minusculas_e_sem_espacos():
+    usuario = Usuario.objects.create_user(
+        email="  Carla@Exemplo.COM ", password="senha-de-teste-123", nome="Carla Exemplo"
+    )
+
+    usuario.refresh_from_db()
+    assert usuario.email == "carla@exemplo.com"

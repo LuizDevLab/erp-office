@@ -40,6 +40,13 @@
 | D22 | `DJANGO_CSRF_TRUSTED_ORIGINS` (em dev: `http://localhost:3000`) | Pelo proxy, o navegador envia a origem do Next; sem isso, POSTs com sessão (login) falham no CSRF |
 | D23 | `node_modules` e `.next` só dentro do container; lint e typecheck rodam no container; `.gitattributes` força LF | O repositório está no OneDrive (sincronizar `node_modules` é inviável) e os arquivos rodam em containers Linux |
 
+### 26/11/2026 — Fase 1 (login e permissões)
+
+| # | Decisão | Motivo |
+|---|---|---|
+| D24 | A sessão dura **um dia de trabalho**: expira 10h após o login (`SESSION_COOKIE_AGE`) | Equilíbrio entre segurança (dados de clientes, LGPD) e não pedir login durante o expediente |
+| D25 | O login **exige token CSRF**, obtido em `GET /api/auth/csrf/`. Senha errada, e-mail inexistente e usuário inativo recebem a mesma resposta. O e-mail é guardado em minúsculas e o login não diferencia maiúsculas | O DRF só checa CSRF para usuário já autenticado, o que deixaria o login aberto a login CSRF; resposta única não revela quais e-mails existem |
+
 ## Questões em aberto (resolver antes ou durante a fase indicada)
 
 1. Validar com a equipe o vencimento do **ICMS – Simples (recolhimento à parte)** (valor inicial: dia 15) e conferir os demais valores iniciais de D15 *(Fase 3)*

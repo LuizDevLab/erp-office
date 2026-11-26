@@ -9,10 +9,14 @@ class UsuarioManager(BaseUserManager):
     def _criar(self, email: str, password: str | None, **campos: Any):
         if not email:
             raise ValueError("Informe o e-mail.")
-        usuario = self.model(email=self.normalize_email(email), **campos)
+        usuario = self.model(email=email, **campos)
         usuario.set_password(password)
         usuario.save(using=self._db)
         return usuario
+
+    def get_by_natural_key(self, username: str):
+        # Login sem diferenciar maiúsculas de minúsculas no e-mail.
+        return self.get(**{f"{self.model.USERNAME_FIELD}__iexact": username})
 
     def create_user(self, email: str, password: str | None = None, **campos: Any):
         campos.setdefault("is_staff", False)

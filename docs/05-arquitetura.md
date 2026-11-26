@@ -13,7 +13,7 @@ O Next.js faz **proxy** de `/api/*` para o Django. Assim, frontend e API ficam n
 
 ## Backend — Django + DRF
 - Python 3.12+, Django (LTS atual), Django REST Framework, django-filter, psycopg 3
-- **Autenticação:** sessão do Django (cookie httpOnly) + CSRF. Endpoints: `POST /api/auth/login/`, `POST /api/auth/logout/`, `GET /api/auth/me/`
+- **Autenticação:** sessão do Django (cookie httpOnly) + CSRF. Endpoints: `GET /api/auth/csrf/` (grava o cookie CSRF), `POST /api/auth/login/`, `POST /api/auth/logout/`, `GET /api/auth/me/`. Sessão de 10h (D24)
 - **Permissões:** classes de permissão do DRF que implementam a tabela de `02-regras-de-negocio.md`, com testes
 - **Regras de negócio em serviços** (`services.py` de cada app), não em views nem em serializers:
   - `obrigacoes.services.abrir_competencia(ano, mes, usuario)`

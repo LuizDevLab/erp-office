@@ -82,6 +82,12 @@ USE_TZ = True
 STATIC_URL = "/django-static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+# Sessão de um dia de trabalho (D24): expira 10h após o login.
+SESSION_COOKIE_AGE = 10 * 60 * 60
+SESSION_COOKIE_HTTPONLY = True
+# O front lê o token CSRF do cookie e envia no header X-CSRFToken.
+CSRF_COOKIE_HTTPONLY = False
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {

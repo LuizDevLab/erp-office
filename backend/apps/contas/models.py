@@ -30,6 +30,15 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = "usuários"
         ordering = ["nome"]
 
+    def save(self, *args, **kwargs) -> None:
+        # E-mail é o login: guardado sempre sem espaços e em minúsculas.
+        self.email = (self.email or "").strip().lower()
+        super().save(*args, **kwargs)
+
+    @property
+    def eh_gestor(self) -> bool:
+        return self.papel == self.Papel.GESTOR
+
     def __str__(self) -> str:
         return self.nome or self.email
 
