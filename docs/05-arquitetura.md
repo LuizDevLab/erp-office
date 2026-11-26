@@ -40,7 +40,7 @@ backend/
 - App Router + TypeScript `strict` + Tailwind CSS (tokens de `04-telas.md` no tema)
 - Dados: **TanStack Query** chamando `/api/*` (cliente fino em `lib/api.ts`, que envia o header CSRF)
 - Formulários: react-hook-form + zod
-- Proteção de rotas: middleware que redireciona para `/login` sem sessão
+- Proteção de rotas: arquivo `proxy.ts` do Next (no Next 16, o antigo `middleware` passou a se chamar `proxy`) redireciona para `/login` sem sessão
 - Sem biblioteca de componentes pesada. Componentes próprios simples (Button, Card, Badge, Table, Drawer).
 
 ### Estrutura
@@ -67,6 +67,7 @@ frontend/
 
 ## Ambiente
 - `docker-compose.yml` com `db`, `backend` e `frontend`; `.env` (fora do git) e `.env.example`
-- Variáveis mínimas: `DATABASE_URL`, `DJANGO_SECRET_KEY`, `DJANGO_DEBUG`, `DJANGO_ALLOWED_HOSTS`, `TZ=America/Fortaleza`
+- Variáveis mínimas (ver `.env.example`): `DATABASE_URL`, `DJANGO_SETTINGS_MODULE`, `DJANGO_SECRET_KEY`, `DJANGO_DEBUG`, `DJANGO_ALLOWED_HOSTS`, `DJANGO_CSRF_TRUSTED_ORIGINS`, `BACKEND_URL`, `POSTGRES_DB/USER/PASSWORD`, `TZ=America/Fortaleza`
+- `node_modules` e `.next` ficam só dentro do container do frontend (o repositório está no OneDrive); lint e typecheck rodam via `docker compose exec frontend`
 - Fuso e locale: `America/Fortaleza`, `pt-BR`
 - Comando `seed_demo` cria **somente dados fictícios** (usuários, empresas, competência e demandas de exemplo)

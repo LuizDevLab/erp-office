@@ -31,6 +31,15 @@
 | D18 | **Hospedagem (local ou nuvem) é decidida na Fase 6.** Requisito fixo desde já: backup diário com `pg_dump` guardado **fora da máquina que roda o sistema**, com teste de restauração. | Não afeta as fases anteriores; decidir agora seria chutar sem conhecer a infraestrutura |
 | D19 | As empresas que não estavam na planilha de obrigações viram item do **checklist da Fase 6** (definir regime e obrigações no cadastro manual). | É tarefa de implantação, não decisão de design |
 
+### 26/11/2026 — Fase 0 (esqueleto)
+
+| # | Decisão | Motivo |
+|---|---|---|
+| D20 | Versões: **Django 5.2 LTS**, **PostgreSQL 17**, **Next.js 16** (com Cache Components e Partial Prefetching, padrão do scaffold), Tailwind v4 | LTS no backend; o Postgres 18 mudou o caminho do volume de dados e o 17 segue estável; Next na versão atual do `create-next-app` |
+| D21 | O proxy do Next encaminha `/api/`, `/admin/` e `/django-static/` ao Django **preservando a barra final**, com `skipTrailingSlashRedirect`. `STATIC_URL` do Django é `/django-static/` | O Django exige a barra (APPEND_SLASH) e o Next a removeria, gerando loop; o prefixo próprio evita colisão com rotas e arquivos do Next |
+| D22 | `DJANGO_CSRF_TRUSTED_ORIGINS` (em dev: `http://localhost:3000`) | Pelo proxy, o navegador envia a origem do Next; sem isso, POSTs com sessão (login) falham no CSRF |
+| D23 | `node_modules` e `.next` só dentro do container; lint e typecheck rodam no container; `.gitattributes` força LF | O repositório está no OneDrive (sincronizar `node_modules` é inviável) e os arquivos rodam em containers Linux |
+
 ## Questões em aberto (resolver antes ou durante a fase indicada)
 
 1. Validar com a equipe o vencimento do **ICMS – Simples (recolhimento à parte)** (valor inicial: dia 15) e conferir os demais valores iniciais de D15 *(Fase 3)*

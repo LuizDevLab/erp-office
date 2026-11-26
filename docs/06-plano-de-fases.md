@@ -11,7 +11,7 @@ Cada fase termina com algo **funcionando e testado**, seguido de um commit. Não
 - **Pronto quando:** `docker compose up` sobe tudo e a página mostra a barra lateral com a logo.
 
 ## Fase 1 — Login e permissões
-- Login/logout por sessão, `/api/auth/me/`, middleware de rota no Next
+- Login/logout por sessão, `/api/auth/me/`, proteção de rota no Next (`proxy.ts`)
 - Papéis colaborador e gestor + classes de permissão
 - **Pronto quando:** existem testes cobrindo cada linha da tabela de permissões que já tem endpoint.
 

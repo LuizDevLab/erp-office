@@ -28,16 +28,22 @@ Quem desenvolve é o Luiz Henrique, assistente fiscal e desenvolvedor. Os usuár
 
 ## Comandos
 
-> Ainda não existem. São criados na Fase 0 (`docs/06-plano-de-fases.md`). Atualize esta seção quando mudarem.
+> Atualize esta seção quando mudarem. Na primeira vez: `cp .env.example .env` e troque segredos e senhas.
 
 ```bash
-docker compose up -d                                        # sobe tudo
+docker compose up -d --build                                # sobe db, backend e frontend
+# App: http://localhost:3000  ·  API via proxy: http://localhost:3000/api/health/
 docker compose exec backend python manage.py migrate        # migrações
-docker compose exec backend python manage.py seed_demo      # dados FICTÍCIOS
+docker compose exec backend python manage.py createsuperuser  # usuário de apoio técnico (admin)
 docker compose exec backend pytest                          # testes do backend
-docker compose exec backend ruff check . && ruff format .   # lint/format Python
-cd frontend && npm run lint && npm run typecheck            # checagens do front
+docker compose exec backend ruff check .                    # lint Python
+docker compose exec backend ruff format .                   # format Python
+docker compose exec frontend npm run lint                   # lint do front
+docker compose exec frontend npm run typecheck              # typecheck do front
 ```
+
+- `seed_demo` (dados FICTÍCIOS) chega na Fase 2.
+- Dependência nova no front: rode `npm install <pacote>` **dentro do container** e depois `docker compose up -d --build frontend` (o `node_modules` fica num volume do container, fora do OneDrive).
 
 ## Regras de trabalho
 
