@@ -1,0 +1,5 @@
+# Força LF no repositório e na cópia de trabalho: os arquivos rodam dentro de containers Linux.
+* text=auto eol=lf
+
+*.png binary
+*.ico binary

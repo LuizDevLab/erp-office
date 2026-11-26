@@ -25,5 +25,23 @@ services:
       db:
         condition: service_healthy
 
+  frontend:
+    build: ./frontend
+    environment:
+      BACKEND_URL: ${BACKEND_URL}
+      TZ: ${TZ}
+      # Hot reload com bind mount no Windows
+      WATCHPACK_POLLING: "true"
+      NEXT_TELEMETRY_DISABLED: "1"
+    volumes:
+      - ./frontend:/app
+      # node_modules e .next ficam no container (fora do bind mount e do OneDrive)
+      - /app/node_modules
+      - /app/.next
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
 volumes:
   pgdata:

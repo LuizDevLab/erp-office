@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+/* Tokens de identidade visual — docs/04-telas.md */
+@theme {
+  --color-preto: #0d0d0d;
+  --color-grafite: #141310;
+  --color-fundo: #f4f2ee;
+  --color-superficie: #ffffff;
+  --color-borda: #e4e0d8;
+  --color-texto: #1c1b19;
+  --color-texto-suave: #6b655a;
+
+  /* Dourado é da marca: não usar para alertas */
+  --color-ouro: #c9a646;
+  --color-ouro-claro: #e3c46b;
+  --color-ouro-texto: #8a6a1f;
+
+  /* Status (sempre acompanhados de texto ou ícone) */
+  --color-atrasada-fundo: #fdecea;
+  --color-atrasada-texto: #a12a1f;
+  --color-hoje-fundo: #fff1e0;
+  --color-hoje-texto: #9a4b00;
+  --color-pendente-fundo: #fff1e0;
+  --color-pendente-texto: #9a4b00;
+  --color-concluida-fundo: #e6f2ec;
+  --color-concluida-texto: #1f5e40;
+}
+
+/* Fontes carregadas via next/font (variáveis definidas em app/layout.tsx) */
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-titulo: var(--font-plus-jakarta), var(--font-inter), ui-sans-serif, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-fundo font-sans text-texto;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-titulo font-semibold;
+  }
+}
