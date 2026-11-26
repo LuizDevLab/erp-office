@@ -1,21 +1,40 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
+
+import { Logo } from "@/components/logo";
+import { iniciais, useLogout, useUsuario } from "@/lib/auth";
 
 const botaoIcone =
   "inline-flex size-11 items-center justify-center rounded-md text-ouro-claro hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-ouro-claro";
 
-function Logo({ className }: { className?: string }) {
+function UsuarioLogado() {
+  const { data: usuario } = useUsuario();
+  const logout = useLogout();
+
+  if (!usuario) return <div className="h-11" aria-hidden="true" />;
+
   return (
-    <Image
-      src="/logo-ta.png"
-      alt="T&A Contabilidade e Consultoria Tributária"
-      width={2170}
-      height={725}
-      loading="eager"
-      className={className}
-    />
+    <div className="flex items-center gap-3">
+      <span
+        className="inline-flex size-10 shrink-0 items-center justify-center rounded-full bg-ouro text-sm font-semibold text-preto"
+        aria-hidden="true"
+      >
+        {iniciais(usuario.nome)}
+      </span>
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-sm font-medium text-white">{usuario.nome}</p>
+        {usuario.cargo && <p className="truncate text-xs text-white/60">{usuario.cargo}</p>}
+      </div>
+      <button
+        type="button"
+        onClick={() => logout.mutate()}
+        disabled={logout.isPending}
+        className="inline-flex h-11 items-center rounded-md px-3 text-sm font-medium text-ouro-claro hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-ouro-claro disabled:opacity-60"
+      >
+        Sair
+      </button>
+    </div>
   );
 }
 
@@ -80,6 +99,10 @@ export function BarraLateral() {
 
         {/* Os itens de navegação entram junto com as telas, nas próximas fases */}
         <nav aria-label="Navegação principal" className="flex-1 px-3" />
+
+        <div className="border-t border-white/10 px-4 py-4">
+          <UsuarioLogado />
+        </div>
       </aside>
     </>
   );

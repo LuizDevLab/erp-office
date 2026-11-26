@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+
+import { Providers } from "./providers";
 import "./globals.css";
 
 const inter = Inter({
@@ -24,7 +26,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="pt-BR"
       className={`${inter.variable} ${plusJakarta.variable} h-full antialiased`}
     >
-      <body className="min-h-full">{children}</body>
+      <body className="min-h-full">
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

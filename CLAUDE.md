@@ -43,7 +43,8 @@ docker compose exec frontend npm run typecheck              # typecheck do front
 ```
 
 - `seed_demo` (dados FICTÍCIOS) chega na Fase 2.
-- Dependência nova no front: rode `npm install <pacote>` **dentro do container** e depois `docker compose up -d --build frontend` (o `node_modules` fica num volume do container, fora do OneDrive).
+- Dependência nova no front: gere o `package-lock.json` num container Linux (`npm install <pacote> --package-lock-only` com `node:24-slim`; o lock gerado no Windows quebra o `npm ci`) e rode `docker compose up -d --build -V frontend`. O `-V` recria o volume do `node_modules`; sem ele o container continua com as dependências antigas.
+- Arquivo novo que o hot reload não enxergou (erro "Module not found" com o arquivo existindo): `docker compose restart frontend` (ou `backend`).
 
 ## Regras de trabalho
 
